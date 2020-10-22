@@ -1,0 +1,15 @@
+To extend the size of Volume Group with a new partition, 
+vgextend battlestar /dev/sda1
+battlestar - name of volume group
+To move data from one partition to another in a volume group do,
+pvmove /dev/sda1
+this will move and remap all contents and physical extentions from sda1 to another partition present in same volume group.
+then inorder to remove the /dev/sda1 from volume group do,
+pvreduce battlestar/dev/sda1
+Inorder to extend Logical Volume size do,
+lvextend -L 5G /dev/battlestar/galactica
+
+lvextend -L +5G /dev/battlestar/galactica - this command adds additional 5Gigs of size to the existing LVM
+this will not be reflected at mount point. Inorder to reflect this change to mount point do,
+xfs_growfs /dev/myvolume - for xfs based partition
+resize2fs /dev/myvolume - for ext4 based partition
