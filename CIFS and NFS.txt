@@ -1,0 +1,19 @@
+CIFS - Common Internet File system - used to transfer files over internet or local network from windows to linux or vice versa.
+NFS - Network File Systems - additional storage file server over network.
+To configure CIFS we use samba.
+apt install smbclient cifs-utils nfs-utils
+smbclient -L 10.0.0.100
+-L - list 
+10.0.0.100 - ip address of samba server
+to mount samba server:
+mount -t cifs -o username=linuxacademy //10.0.0.100/public /mnt/sambashare
+public - is the sharname to mount specific disk
+/mnt/sambashare - mount point in our system.
+To mount nfs server:
+mount -t nfs 10.0.0.100:/nfsshare /mnt/nfsshare
+To mount it persistively - Edit /etc/fstab file
+
+//10.0.0.100/public /mnt/sambashare cifs username=linuxacademy, password=123456 0 0
+10.0.0.100:/nfsshare /mnt/nfsshare nfs defaults 0 0
+
+mount -a - to mount all disks present in fstab.
