@@ -1,0 +1,28 @@
+A user who doesn't need to be root or owner of the file or doesn't belong to any group (which have permission access), can have access to files. 
+This can be done using Access Control List.
+FILES:
+to get the acess control list for a file - getfacl filename
+to set the acess control list for a file - setfacl -m u:username:rwx filename
+-m - modify
+setting the access control list modifies the mask value which is the maximum permission to be set for a file. This means even if the file permissions has been changed
+for the specific file, the user or group to whom file permissions are set using setfacl would not have the same permissions as set using setfacl command.
+To change the permission of mask for a file, 
+1. chmod u+rw filename - will also set the same permissions for mask value as well (or)
+2. setfacl -m m::rw filename
+
+DIRECTORIES:
+To set access control list on directories, two things need to be done.
+
+1. set or modify default values for specific user or group for that directory, in ACL - setfacl -d -m u:username:rwx directoryname
+NOTE: For directory always make sure to give execute permissions, since a user can only read or write or create files in a directory, if he has execute permissions.
+-d - defaults
+when this is set , the file inside directory will be created with default permissions.
+But inorder for other users, to create a file, they should first have write permissions on that directory. For this, 
+2. set or modify the value again for user or group in ACL - setfacl -m u:username:rw directoryname 
+
+To remove the default permission for a directory - setfacl -k directoryname
+
+Copy Access control list permissions:
+
+getfacl file1 | setfacl --set-file=- file2
+- - specifies that the permission values come from standard output.
