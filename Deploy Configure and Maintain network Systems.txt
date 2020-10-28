@@ -1,0 +1,32 @@
+Config Networking and Hostname resolution: 1
+
+to check the configured networks, use ip addr instead of ifconfig, since ifconfig is deprecated.
+ss -  to check listening ports.
+ss -atun 
+-a - all listening ports
+-t - TCP sockets
+-u - UDP sockets
+-n - port number
+ip -s link show eth0 - shows statistical information on "eth0" connection
+like no. of data packets sent and received. using this command, we can check whether the send and receive signal is working.
+
+Config Networking and Hostname resolution: 2
+
+To check connected network devices use,
+ls /sys/class/net
+(or) using network control manager 
+nmcli dev status
+nmcli and press double tab to show options 
+nmcli con show - same as "nmcli dev status" shows all active connections
+It is possible to add multiple networks to linux device. To add a new connection do,
+nmcli con add con-name "myconn1" autoconnect yes type ethernet ifname eth0
+if forgot the command while typing , press double tab to show options.
+To show active connections, - nmcli con show --active
+nmcli dev show
+dev - devices ,  con - connections
+Inorder to route traffic to specific network use,
+nmcli con add con-name "myconn-static" type ethernet ifname eth0 ip4 10.0.0.16 gw4 10.0.0.1
+gw4 - gateway for ipv4
+To stop network connection, - nmcli con drop "myconn1"
+To modify a connection - nmcli con mod "myconn" connection.autoconnect no - press tab if you are struck inbetween command
+To delete a conneciton - nmcli con del "myconn"
